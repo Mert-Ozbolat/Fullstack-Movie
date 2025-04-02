@@ -1,6 +1,6 @@
 const bodyParser = require("../utils/bodyParser");
-const crypto = require('crypto')
-const fs = require('fs')
+const crypto = require("crypto");
+const fs = require("fs");
 
 const keys = [
     "title",
@@ -20,26 +20,27 @@ const postRequest = async (req, res) => {
             !body.genre.length > 0 ||
             !body.cast.length > 0
         ) {
-            res.writeHead(404)
-            res.end("Lutfen zounlu alan butun alanlari tanimlayin");
+            res.writeHead(404);
+            res.end("Lütfen zorunlu olan bütün alanları tanımlayınnn");
             return;
         }
 
         body.id = crypto.randomUUID();
 
-        let data = fs.readFileSync('./data/movies.json', 'utf-8')
-        data = JSON.parse(data)
+        // json dosyasından verileri al
+        let data = fs.readFileSync("./data/movies.json", "utf-8");
+        data = JSON.parse(data);
 
-        data.push(body)
+        data.push(body);
 
-        fs.writeFileSync('./data/movies.json', body)
+        fs.writeFileSync("./data/movies.json", JSON.stringify(data));
 
-
-
-        res.end("film olusturuldu");
+        res.writeHead(201);
+        res.end(JSON.stringify(body));
     } else {
         res.writeHead(404);
-        res.end("Gecersiz yola istek");
+        res.end("Geçersiz yola istek atıldı");
     }
 };
+
 module.exports = postRequest;
