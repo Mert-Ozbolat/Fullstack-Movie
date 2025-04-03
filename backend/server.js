@@ -8,6 +8,7 @@ const defaultRequest = require('./methods/default')
 const server = http.createServer((req, res) => {
 
     res.setHeader('Content-Type', 'aplication/json')
+    res.setHeader('Access-Control-Allow-Origins', '*')
 
     switch (req.method) {
         case 'GET':
